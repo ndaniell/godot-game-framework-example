@@ -35,10 +35,12 @@ text = "Lobby"
 horizontal_alignment = 1
 
 [node name="StatusLabel" type="Label" parent="Root/Panel/Margin/VBox"]
+unique_name_in_owner = true
 text = "Status: (unknown)"
 horizontal_alignment = 1
 
 [node name="PeersLabel" type="Label" parent="Root/Panel/Margin/VBox"]
+unique_name_in_owner = true
 text = "Peers: []"
 horizontal_alignment = 1
 
@@ -46,8 +48,10 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(0, 16)
 
 [node name="StartGameButton" type="Button" parent="Root/Panel/Margin/VBox"]
+unique_name_in_owner = true
 text = "Start Game (Host)"
 
 [node name="BackButton" type="Button" parent="Root/Panel/Margin/VBox"]
+unique_name_in_owner = true
 text = "Back to Menu"
 

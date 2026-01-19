@@ -8,6 +8,10 @@ script = ExtResource("2_states")
 name = "MENU"
 entry_callback = "_on_menu_entered"
 
+[sub_resource type="Resource" id="SubResource_boot"]
+script = ExtResource("2_states")
+name = "BOOT"
+
 [sub_resource type="Resource" id="SubResource_lobby"]
 script = ExtResource("2_states")
 name = "LOBBY"
@@ -20,8 +24,9 @@ entry_callback = "_on_playing_entered"
 
 [resource]
 script = ExtResource("1_main")
-default_state = "MENU"
+default_state = "BOOT"
 states = {
+"BOOT": SubResource("SubResource_boot"),
 "LOBBY": SubResource("SubResource_lobby"),
 "MENU": SubResource("SubResource_menu"),
 "PLAYING": SubResource("SubResource_playing")

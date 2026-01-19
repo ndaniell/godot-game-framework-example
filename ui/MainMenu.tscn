@@ -38,26 +38,31 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(0, 16)
 
 [node name="HostButton" type="Button" parent="Root/Panel/Margin/VBox"]
+unique_name_in_owner = true
 text = "Host"
 
 [node name="JoinRow" type="HBoxContainer" parent="Root/Panel/Margin/VBox"]
 
 [node name="IpEdit" type="LineEdit" parent="Root/Panel/Margin/VBox/JoinRow"]
+unique_name_in_owner = true
 size_flags_horizontal = 3
 text = "127.0.0.1"
 placeholder_text = "Server IP"
 
 [node name="PortEdit" type="LineEdit" parent="Root/Panel/Margin/VBox/JoinRow"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(120, 0)
 text = "8910"
 placeholder_text = "Port"
 
 [node name="JoinButton" type="Button" parent="Root/Panel/Margin/VBox"]
+unique_name_in_owner = true
 text = "Join"
 
 [node name="Spacer2" type="Control" parent="Root/Panel/Margin/VBox"]
 custom_minimum_size = Vector2(0, 16)
 
 [node name="QuitButton" type="Button" parent="Root/Panel/Margin/VBox"]
+unique_name_in_owner = true
 text = "Quit"
 
