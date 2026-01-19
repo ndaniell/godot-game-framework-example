@@ -41,16 +41,17 @@ func _refresh() -> void:
 		_start.disabled = true
 		return
 
-	var connected := net.is_network_connected()
-	var mode := "host" if net.is_host() else "client"
+	var connected: bool = bool(net.is_network_connected())
+	var is_host: bool = bool(net.is_host())
+	var mode := "host" if is_host else "client"
 	_status.text = "Status: " + ("online (" + mode + ")" if connected else "offline")
 	_peers.text = "Peers: " + str(net.get_peer_ids())
-	_start.disabled = not (connected and net.is_host())
+	_start.disabled = not (connected and is_host)
 
 
 func _on_start_pressed() -> void:
 	var net := GGF.get_manager(&"NetworkManager")
-	if net == null or not net.is_host():
+	if net == null or not bool(net.is_host()):
 		return
 
 	# Server broadcasts; NetworkManager accepts it locally and RPCs to clients.

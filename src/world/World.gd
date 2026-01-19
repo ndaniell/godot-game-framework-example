@@ -1,6 +1,6 @@
 extends Node3D
 
-const PLAYER_SCENE := preload("res://scenes/Player.tscn")
+const PLAYER_SCENE: PackedScene = preload("res://scenes/Player.tscn")
 
 var _players: Dictionary = {}  # peer_id -> CharacterBody3D
 
@@ -50,7 +50,7 @@ func _spawn_player(peer_id: int) -> void:
 	var player := PLAYER_SCENE.instantiate() as CharacterBody3D
 	player.name = "Player_%d" % peer_id
 	add_child(player)
-	player.global_position = Vector3(0, 2, 0) + Vector3(peer_id % 4, 0, peer_id / 4)
+	player.global_position = Vector3(0, 2, 0) + Vector3(peer_id % 4, 0, float(peer_id) / 4.0)
 
 	# Assign multiplayer authority for client-side control.
 	player.set_multiplayer_authority(peer_id)

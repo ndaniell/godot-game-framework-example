@@ -19,8 +19,7 @@ func _on_host_pressed() -> void:
 		GGF.notifications().show_error("NetworkManager not available")
 		return
 
-	var ok := net.host(_parse_port())
-	if ok:
+	if bool(net.host(_parse_port())):
 		GGF.get_manager(&"GameManager").change_state("LOBBY")
 
 
@@ -35,8 +34,7 @@ func _on_join_pressed() -> void:
 		GGF.notifications().show_error("Enter a server IP")
 		return
 
-	var ok := net.join(ip, _parse_port())
-	if ok:
+	if bool(net.join(ip, _parse_port())):
 		GGF.get_manager(&"GameManager").change_state("LOBBY")
 
 
