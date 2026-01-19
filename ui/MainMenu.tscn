@@ -1,6 +1,24 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://src/ui/MainMenu.gd" id="1"]
+
+[sub_resource type="StyleBoxFlat" id="1"]
+bg_color = Color(0.09, 0.10, 0.12, 0.92)
+border_color = Color(0.18, 0.20, 0.24, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+shadow_color = Color(0, 0, 0, 0.35)
+shadow_size = 10
+content_margin_left = 24
+content_margin_right = 24
+content_margin_top = 22
+content_margin_bottom = 22
 
 [node name="MainMenu" type="Control"]
 anchors_preset = 15
@@ -8,61 +26,80 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource("1")
 
+[node name="Backdrop" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0.45)
+
 [node name="Root" type="CenterContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="Panel" type="PanelContainer" parent="Root"]
-custom_minimum_size = Vector2(520, 360)
+custom_minimum_size = Vector2(560, 400)
+theme_override_styles/panel = SubResource("1")
 
 [node name="Margin" type="MarginContainer" parent="Root/Panel"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme_override_constants/margin_left = 24
-theme_override_constants/margin_right = 24
-theme_override_constants/margin_top = 24
-theme_override_constants/margin_bottom = 24
 
 [node name="VBox" type="VBoxContainer" parent="Root/Panel/Margin"]
 size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 1
+theme_override_constants/separation = 12
 
 [node name="Title" type="Label" parent="Root/Panel/Margin/VBox"]
 text = "GGF Example"
 horizontal_alignment = 1
+theme_override_font_sizes/font_size = 28
+
+[node name="Subtitle" type="Label" parent="Root/Panel/Margin/VBox"]
+text = "Host or join a simple multiplayer 3D world."
+horizontal_alignment = 1
+autowrap_mode = 2
+theme_override_font_sizes/font_size = 14
+modulate = Color(1, 1, 1, 0.8)
 
 [node name="Spacer1" type="Control" parent="Root/Panel/Margin/VBox"]
-custom_minimum_size = Vector2(0, 16)
+custom_minimum_size = Vector2(0, 4)
 
 [node name="HostButton" type="Button" parent="Root/Panel/Margin/VBox"]
 unique_name_in_owner = true
 text = "Host"
+custom_minimum_size = Vector2(0, 44)
 
 [node name="JoinRow" type="HBoxContainer" parent="Root/Panel/Margin/VBox"]
+theme_override_constants/separation = 10
 
 [node name="IpEdit" type="LineEdit" parent="Root/Panel/Margin/VBox/JoinRow"]
 unique_name_in_owner = true
 size_flags_horizontal = 3
 text = "127.0.0.1"
 placeholder_text = "Server IP"
+custom_minimum_size = Vector2(0, 40)
 
 [node name="PortEdit" type="LineEdit" parent="Root/Panel/Margin/VBox/JoinRow"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(120, 0)
 text = "8910"
 placeholder_text = "Port"
+custom_minimum_size = Vector2(120, 40)
 
 [node name="JoinButton" type="Button" parent="Root/Panel/Margin/VBox"]
 unique_name_in_owner = true
 text = "Join"
+custom_minimum_size = Vector2(0, 44)
 
 [node name="Spacer2" type="Control" parent="Root/Panel/Margin/VBox"]
-custom_minimum_size = Vector2(0, 16)
+custom_minimum_size = Vector2(0, 4)
 
 [node name="QuitButton" type="Button" parent="Root/Panel/Margin/VBox"]
 unique_name_in_owner = true
 text = "Quit"
+custom_minimum_size = Vector2(0, 44)
 

@@ -20,6 +20,10 @@ func _ready() -> void:
 
 	var main_menu := main_menu_scene.instantiate() as Control
 	var lobby_menu := lobby_menu_scene.instantiate() as Control
+	# Menus default to visible=true; hide them until UIManager opens them, otherwise they
+	# can overlap (e.g. MENU still visible behind LOBBY).
+	main_menu.visible = false
+	lobby_menu.visible = false
 
 	ui.register_ui_element("main_menu", main_menu, ui.menu_layer)
 	ui.register_ui_element("lobby_menu", lobby_menu, ui.menu_layer)
