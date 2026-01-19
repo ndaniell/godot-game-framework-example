@@ -1,0 +1,53 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/ui/LobbyMenu.gd" id="1"]
+
+[node name="LobbyMenu" type="Control"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1")
+
+[node name="Root" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Panel" type="PanelContainer" parent="Root"]
+custom_minimum_size = Vector2(520, 360)
+
+[node name="Margin" type="MarginContainer" parent="Root/Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="VBox" type="VBoxContainer" parent="Root/Panel/Margin"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Title" type="Label" parent="Root/Panel/Margin/VBox"]
+text = "Lobby"
+horizontal_alignment = 1
+
+[node name="StatusLabel" type="Label" parent="Root/Panel/Margin/VBox"]
+text = "Status: (unknown)"
+horizontal_alignment = 1
+
+[node name="PeersLabel" type="Label" parent="Root/Panel/Margin/VBox"]
+text = "Peers: []"
+horizontal_alignment = 1
+
+[node name="Spacer1" type="Control" parent="Root/Panel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 16)
+
+[node name="StartGameButton" type="Button" parent="Root/Panel/Margin/VBox"]
+text = "Start Game (Host)"
+
+[node name="BackButton" type="Button" parent="Root/Panel/Margin/VBox"]
+text = "Back to Menu"
+

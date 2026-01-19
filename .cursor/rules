@@ -1,0 +1,26 @@
+You are working in a Godot 4.5+ example project that MUST use `godot-game-framework` (GGF) as much as possible.
+
+## Non-negotiables
+- Prefer calling into **GGF managers** instead of creating new global singletons or bespoke manager nodes.
+  - Use `GGF.get_manager(&"GameManager")`, `GGF.get_manager(&"UIManager")`, `GGF.get_manager(&"NetworkManager")`, `GGF.events()`, `GGF.notifications()`, `GGF.log()`.
+- Do NOT modify framework code in `addons/godot_game_framework/` unless the change is clearly reusable across projects.
+  - First try to extend/override via project code (e.g. `src/managers/*`, `src/ExampleGGF.gd`).
+- Keep the example “framework-first”:
+  - **Flow** is driven by `GameManager` states (`MENU`, `LOBBY`, `PLAYING`).
+  - **UI** is registered and controlled via `UIManager`.
+  - **Networking** uses `NetworkManager` and reacts through `EventManager`-mirrored events/signals.
+  - Use `NotificationManager` for player-visible feedback.
+
+## When to expand the framework (suggestions you should surface)
+If implementing any of the below in the example, suggest promoting it into GGF (new manager or extension point) instead of local one-offs:
+- **Lobby replication**: player names/ready state/lobby metadata synced server→clients.
+- **Player registry/spawn orchestration**: standardized spawn points, late-join sync, despawn rules.
+- **Authoritative validation**: server-side movement/interaction validation, anti-cheat hooks.
+- **Session orchestration**: standardized “start match / end match / return to lobby” lifecycle helpers.
+- **Matchmaking / NAT traversal**: beyond raw ENet host/join.
+- **Networked scene management**: consistent server-authoritative scene loading & handshakes (integrating with `SceneManager`).
+
+## Style / tooling expectations
+- Use `./ggfe format` and `./ggfe lint` (CI enforces `./ggfe format --check --diff` and `./ggfe lint`).
+- Keep GDScript type hints where reasonable; prefer clarity over cleverness.
+

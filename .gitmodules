@@ -1,0 +1,3 @@
+[submodule "addons/godot_game_framework"]
+	path = addons/godot_game_framework
+	url = https://github.com/ndaniell/godot-game-framework.git

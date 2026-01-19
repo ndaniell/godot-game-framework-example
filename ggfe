@@ -1,0 +1,153 @@
+#!/bin/bash
+
+# Godot Game Framework Example - Central management script (ggfe)
+# Mirrors the framework's `ggf` commands (install/lint/format) for this example repo.
+
+GODOT_URL="https://downloads.godotengine.org/?version=4.5.1&flavor=stable&slug=linux.x86_64.zip&platform=linux.64"
+GODOT_DIR="godot"
+TEMP_ZIP="/tmp/godot_linux.zip"
+
+if [ -t 1 ] && command -v tput > /dev/null 2>&1; then
+    RED=$(tput setaf 1)
+    GREEN=$(tput setaf 2)
+    YELLOW=$(tput setaf 3)
+    BLUE=$(tput setaf 4)
+    BOLD=$(tput bold)
+    NC=$(tput sgr0)
+else
+    RED=''; GREEN=''; YELLOW=''; BLUE=''; BOLD=''; NC=''
+fi
+
+show_help() {
+    echo "${BLUE}Godot Game Framework Example (ggfe)${NC}"
+    echo
+    echo "${GREEN}Usage:${NC}"
+    echo "    ggfe <command> [options]"
+    echo
+    echo "${GREEN}Commands:${NC}"
+    echo "    ${YELLOW}install${NC}           Download and install Godot engine"
+    echo "    ${YELLOW}lint${NC}              Lint GDScript (gdlint) for example + framework submodule"
+    echo "    ${YELLOW}format [--check]${NC}  Format GDScript (gdformat) for example + framework submodule"
+    echo "    ${YELLOW}help${NC}              Show this help message"
+    echo
+    echo "${GREEN}Lint/format options:${NC}"
+    echo "    ${YELLOW}--check${NC}           For format: do not write changes; exit non-zero if changes needed"
+    echo "    ${YELLOW}--diff${NC}            For format --check: print unified diff"
+}
+
+require_command() {
+    local cmd="$1"
+    local human_name="$2"
+    if command -v "$cmd" > /dev/null 2>&1; then
+        return 0
+    fi
+    echo "${RED}Error: '$cmd' not found.${NC}"
+    echo "${YELLOW}Install ${human_name} locally to use this command.${NC}"
+    echo "${YELLOW}Tip: pip install -r requirements-dev.txt${NC}"
+    return 1
+}
+
+find_godot_executable() {
+    if [ -f "$GODOT_DIR/Godot_v4.5.1-stable_linux.x86_64" ]; then
+        echo "$GODOT_DIR/Godot_v4.5.1-stable_linux.x86_64"
+        return 0
+    fi
+    local executable
+    executable=$(find "$GODOT_DIR" -type f -name "Godot*" -executable 2>/dev/null | head -n 1 || true)
+    if [ -n "$executable" ]; then
+        echo "$executable"
+        return 0
+    fi
+    if command -v godot > /dev/null 2>&1; then
+        echo "godot"
+        return 0
+    fi
+    return 1
+}
+
+cmd_install() {
+    set -e
+    echo "${BLUE}Installing Godot 4.5.1...${NC}"
+    mkdir -p "$GODOT_DIR"
+
+    if [ -f "$GODOT_DIR/Godot"* ] || [ -f "$GODOT_DIR/godot"* ]; then
+        echo "${YELLOW}Godot appears to already be installed in $GODOT_DIR/${NC}"
+        echo "${YELLOW}Remove it if you want to reinstall.${NC}"
+        exit 0
+    fi
+
+    echo "${BLUE}Downloading Godot 4.5.1...${NC}"
+    require_command "curl" "curl" || exit 1
+    require_command "unzip" "unzip" || exit 1
+
+    curl -L -o "$TEMP_ZIP" "$GODOT_URL"
+    echo "${BLUE}Extracting Godot...${NC}"
+    unzip -q "$TEMP_ZIP" -d "$GODOT_DIR"
+    rm -f "$TEMP_ZIP"
+
+    local exe
+    exe=$(find_godot_executable) || true
+    if [ -z "$exe" ]; then
+        echo "${RED}Error: Could not find Godot executable after extraction${NC}"
+        exit 1
+    fi
+    chmod +x "$exe" 2>/dev/null || true
+
+    echo "${GREEN}✓ Godot installed: ${YELLOW}${exe}${NC}"
+}
+
+cmd_lint() {
+    echo "${BLUE}Linting GDScript...${NC}"
+    require_command "gdlint" "gdtoolkit" || exit 1
+
+    gdlint src ui scenes resources
+    gdlint addons/godot_game_framework/addons/godot_game_framework
+}
+
+cmd_format() {
+    local CHECK=false
+    local DIFF=false
+
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            --check) CHECK=true; shift ;;
+            --diff) DIFF=true; shift ;;
+            *) echo "${YELLOW}Unknown option: $1${NC}"; shift ;;
+        esac
+    done
+
+    echo "${BLUE}Formatting GDScript...${NC}"
+    require_command "gdformat" "gdtoolkit" || exit 1
+
+    local TARGETS=(src ui scenes resources addons/godot_game_framework/addons/godot_game_framework)
+
+    if [ "$CHECK" = true ]; then
+        if [ "$DIFF" = true ]; then
+            gdformat --check --diff "${TARGETS[@]}"
+        else
+            gdformat --check "${TARGETS[@]}"
+        fi
+    else
+        gdformat "${TARGETS[@]}"
+    fi
+}
+
+main() {
+    if [ $# -eq 0 ]; then
+        show_help
+        exit 0
+    fi
+
+    local COMMAND="$1"
+    shift
+    case "$COMMAND" in
+        install) cmd_install "$@" ;;
+        lint) cmd_lint "$@" ;;
+        format) cmd_format "$@" ;;
+        help|--help|-h) show_help ;;
+        *) echo "${RED}Error: Unknown command '$COMMAND'${NC}"; echo; show_help; exit 1 ;;
+    esac
+}
+
+main "$@"
+
