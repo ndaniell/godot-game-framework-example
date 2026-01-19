@@ -25,4 +25,3 @@ func _on_playing_entered() -> void:
 	if ui and ui.has_method("close_all_menus"):
 		ui.close_all_menus()
 	change_scene("res://scenes/World.tscn")
-

@@ -28,4 +28,3 @@ func _ready() -> void:
 	var gm := GGF.get_manager(&"GameManager")
 	if gm and gm.has_method("change_state"):
 		gm.change_state("MENU")
-

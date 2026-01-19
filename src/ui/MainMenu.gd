@@ -51,4 +51,3 @@ func _on_quit_pressed() -> void:
 func _parse_port() -> int:
 	var p := int(_port_edit.text)
 	return p if p > 0 else 8910
-

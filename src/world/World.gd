@@ -56,4 +56,3 @@ func _spawn_player(peer_id: int) -> void:
 	player.set_multiplayer_authority(peer_id)
 
 	_players[peer_id] = player
-

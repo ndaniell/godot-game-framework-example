@@ -80,4 +80,3 @@ func _on_peer_changed(_data: Dictionary) -> void:
 func _on_start_game_event(_data: Dictionary) -> void:
 	# Client receives this via EventManager mirroring the session event.
 	GGF.get_manager(&"GameManager").change_state("PLAYING")
-
