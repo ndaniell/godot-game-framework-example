@@ -2,6 +2,14 @@
 
 [ext_resource type="Script" path="res://src/world/Player.gd" id="1"]
 
+[sub_resource type="CapsuleShape3D" id="1"]
+radius = 0.4
+height = 1.2
+
+[sub_resource type="CapsuleMesh" id="2"]
+radius = 0.4
+height = 1.2
+
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1")
 
@@ -10,12 +18,4 @@ shape = SubResource("1")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("2")
-
-[sub_resource type="CapsuleShape3D" id="1"]
-radius = 0.4
-height = 1.2
-
-[sub_resource type="CapsuleMesh" id="2"]
-radius = 0.4
-height = 1.2
 
