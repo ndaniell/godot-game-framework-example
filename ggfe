@@ -41,9 +41,25 @@ require_command() {
     if command -v "$cmd" > /dev/null 2>&1; then
         return 0
     fi
+    if [ -x ".venv/bin/$cmd" ]; then
+        return 0
+    fi
     echo "${RED}Error: '$cmd' not found.${NC}"
     echo "${YELLOW}Install ${human_name} locally to use this command.${NC}"
     echo "${YELLOW}Tip: pip install -r requirements-dev.txt${NC}"
+    return 1
+}
+
+resolve_command() {
+    local cmd="$1"
+    if command -v "$cmd" > /dev/null 2>&1; then
+        echo "$cmd"
+        return 0
+    fi
+    if [ -x ".venv/bin/$cmd" ]; then
+        echo ".venv/bin/$cmd"
+        return 0
+    fi
     return 1
 }
 
@@ -100,8 +116,11 @@ cmd_lint() {
     echo "${BLUE}Linting GDScript...${NC}"
     require_command "gdlint" "gdtoolkit" || exit 1
 
-    gdlint src ui scenes resources
-    gdlint addons/godot_game_framework
+    local GDLINT
+    GDLINT="$(resolve_command gdlint)"
+
+    "$GDLINT" src ui scenes resources
+    "$GDLINT" addons/godot_game_framework
 }
 
 cmd_format() {
@@ -118,17 +137,19 @@ cmd_format() {
 
     echo "${BLUE}Formatting GDScript...${NC}"
     require_command "gdformat" "gdtoolkit" || exit 1
+    local GDFORMAT
+    GDFORMAT="$(resolve_command gdformat)"
 
     local TARGETS=(src ui scenes resources addons/godot_game_framework)
 
     if [ "$CHECK" = true ]; then
         if [ "$DIFF" = true ]; then
-            gdformat --check --diff "${TARGETS[@]}"
+            "$GDFORMAT" --check --diff "${TARGETS[@]}"
         else
-            gdformat --check "${TARGETS[@]}"
+            "$GDFORMAT" --check "${TARGETS[@]}"
         fi
     else
-        gdformat "${TARGETS[@]}"
+        "$GDFORMAT" "${TARGETS[@]}"
     fi
 }
 
