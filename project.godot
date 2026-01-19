@@ -23,3 +23,7 @@ GGF="*res://src/ExampleGGF.gd"
 
 file_logging/enable_file_logging=true
 file_logging/log_path="user://logs/ggf_example.log"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot_game_framework/plugin.cfg")
