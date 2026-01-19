@@ -1,5 +1,7 @@
 # Godot Game Framework Example
 
+[![GDScript style](https://github.com/ndaniell/godot-game-framework-example/actions/workflows/gdscript-style.yml/badge.svg)](https://github.com/ndaniell/godot-game-framework-example/actions/workflows/gdscript-style.yml)
+
 Example project using [`ndaniell/godot-game-framework`](https://github.com/ndaniell/godot-game-framework) as a git submodule.
 
 ## Setup
