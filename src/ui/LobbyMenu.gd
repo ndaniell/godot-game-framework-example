@@ -6,6 +6,17 @@ extends Control
 @onready var _back: Button = %BackButton
 
 
+func _get_peer_ids() -> Array[int]:
+	var ids: Array[int] = []
+	if multiplayer.multiplayer_peer == null:
+		return ids
+	ids.append(multiplayer.get_unique_id())
+	for p in multiplayer.get_peers():
+		ids.append(int(p))
+	ids.sort()
+	return ids
+
+
 func _ready() -> void:
 	_start.pressed.connect(_on_start_pressed)
 	_back.pressed.connect(_on_back_pressed)
@@ -45,7 +56,7 @@ func _refresh() -> void:
 	var is_host: bool = bool(net.is_host())
 	var mode := "host" if is_host else "client"
 	_status.text = "Status: " + ("online (" + mode + ")" if connected else "offline")
-	_peers.text = "Peers: " + str(net.get_peer_ids())
+	_peers.text = "Peers: " + str(_get_peer_ids())
 	_start.disabled = not (connected and is_host)
 
 

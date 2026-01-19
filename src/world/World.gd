@@ -5,6 +5,17 @@ const PLAYER_SCENE: PackedScene = preload("res://scenes/Player.tscn")
 var _players: Dictionary = {}  # peer_id -> CharacterBody3D
 
 
+func _get_peer_ids() -> Array[int]:
+	var ids: Array[int] = []
+	if multiplayer.multiplayer_peer == null:
+		return ids
+	ids.append(multiplayer.get_unique_id())
+	for p in multiplayer.get_peers():
+		ids.append(int(p))
+	ids.sort()
+	return ids
+
+
 func _ready() -> void:
 	# React to connection lifecycle through the framework’s managers/events.
 	GGF.events().subscribe("peer_joined", _on_peer_joined)
@@ -24,10 +35,8 @@ func _spawn_existing_peers() -> void:
 	var net := GGF.get_manager(&"NetworkManager")
 	if net == null:
 		return
-	for peer_id in net.get_peer_ids():
-		_spawn_player(int(peer_id))
-	# Ensure local player exists even if get_peer_ids omits it early.
-	_spawn_player(multiplayer.get_unique_id())
+	for peer_id in _get_peer_ids():
+		_spawn_player(peer_id)
 
 
 func _on_peer_joined(data: Dictionary) -> void:
