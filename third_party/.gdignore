@@ -1,0 +1,3 @@
+# Ignore all third_party content in the Godot editor file-system scan.
+# The framework addon is surfaced via the symlink at `addons/godot_game_framework/`.
+
