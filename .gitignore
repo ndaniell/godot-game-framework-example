@@ -8,8 +8,5 @@ export_presets.cfg
 # Local Godot downloads (ggfe install)
 godot/
 
-# OS / tooling
-.DS_Store
-*.swp
-*.swo
-
+.venv/
+venv/

@@ -1,8 +1,7 @@
-extends "res://addons/godot_game_framework/addons/godot_game_framework/GGF.gd"
+extends "res://addons/godot_game_framework/GGF.gd"
 
-const MANAGER_NODE_PREFIX := "GGF_"
 const _MANAGERS_BASE := (
-	"res://addons/godot_game_framework/" + "addons/godot_game_framework/core/managers/"
+	"res://addons/godot_game_framework/core/managers/"
 )
 
 
