@@ -19,6 +19,28 @@ config/icon="res://icon.svg"
 
 GGF="*res://src/ExampleGGF.gd"
 
+[input]
+
+ui_up={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"physical_keycode":Key.UP), Object(InputEventKey,"physical_keycode":Key.W)]
+}
+
+ui_down={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"physical_keycode":Key.DOWN), Object(InputEventKey,"physical_keycode":Key.S)]
+}
+
+ui_left={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"physical_keycode":Key.LEFT), Object(InputEventKey,"physical_keycode":Key.A)]
+}
+
+ui_right={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"physical_keycode":Key.RIGHT), Object(InputEventKey,"physical_keycode":Key.D)]
+}
+
 [debug]
 
 file_logging/enable_file_logging=true

@@ -4,6 +4,9 @@ extends CharacterBody3D
 @export var jump_velocity: float = 6.5
 @export var mouse_sensitivity: float = 0.002
 
+@onready var _spring_arm: SpringArm3D = $SpringArm3D
+@onready var _camera: Camera3D = $SpringArm3D/Camera3D
+
 var _yaw: float = 0.0
 var _pitch: float = 0.0
 
@@ -12,6 +15,9 @@ func _ready() -> void:
 	# Only the authoritative peer controls this player.
 	if not is_multiplayer_authority():
 		return
+
+	if _camera:
+		_camera.make_current()
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
@@ -24,6 +30,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		_pitch -= event.relative.y * mouse_sensitivity
 		_pitch = clamp(_pitch, -1.2, 1.2)
 		rotation.y = _yaw
+		if _spring_arm:
+			_spring_arm.rotation.x = _pitch
 
 	if event.is_action_pressed("ui_cancel"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -44,8 +52,8 @@ func _physics_process(delta: float) -> void:
 		dir.x += 1.0
 
 	dir = dir.normalized()
-	var basis := Basis(Vector3.UP, rotation.y)
-	var wish := basis * dir
+	var move_basis := Basis(Vector3.UP, rotation.y)
+	var wish := move_basis * dir
 
 	velocity.x = wish.x * move_speed
 	velocity.z = wish.z * move_speed
