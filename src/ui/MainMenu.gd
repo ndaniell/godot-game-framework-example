@@ -2,6 +2,7 @@ extends Control
 
 @onready var _host_button: Button = %HostButton
 @onready var _join_button: Button = %JoinButton
+@onready var _settings_button: Button = %SettingsButton
 @onready var _quit_button: Button = %QuitButton
 @onready var _ip_edit: LineEdit = %IpEdit
 @onready var _port_edit: LineEdit = %PortEdit
@@ -10,6 +11,7 @@ extends Control
 func _ready() -> void:
 	_host_button.pressed.connect(_on_host_pressed)
 	_join_button.pressed.connect(_on_join_pressed)
+	_settings_button.pressed.connect(_on_settings_pressed)
 	_quit_button.pressed.connect(_on_quit_pressed)
 
 
@@ -44,6 +46,12 @@ func _on_quit_pressed() -> void:
 		gm.quit_game()
 	else:
 		get_tree().quit()
+
+
+func _on_settings_pressed() -> void:
+	var ui := GGF.get_manager(&"UIManager")
+	if ui and ui.has_method("open_dialog"):
+		ui.call("open_dialog", "settings_dialog", true)
 
 
 func _parse_port() -> int:

@@ -15,6 +15,8 @@ func _bootstrap() -> void:
 				{
 					"MENU":
 					{
+						# Ensure the 3D world isn't still visible behind menus.
+						"change_scene": "res://scenes/Bootstrap.tscn",
 						"ui":
 						{
 							"open_menu": "main_menu",

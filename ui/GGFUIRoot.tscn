@@ -12,31 +12,26 @@ grow_vertical = 2
 anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-mouse_filter = 2
 
 [node name="Game" type="Control" parent="."]
 anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-mouse_filter = 2
 
 [node name="UI" type="Control" parent="."]
 anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-mouse_filter = 2
 
 [node name="Dialog" type="Control" parent="."]
 anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-mouse_filter = 2
 
 [node name="Overlay" type="Control" parent="."]
 anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-mouse_filter = 2
 
 [node name="Menu" type="Control" parent="."]
 anchors_preset = 0

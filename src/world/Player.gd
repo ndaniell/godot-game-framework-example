@@ -13,7 +13,7 @@ var _pitch: float = 0.0
 
 func _ready() -> void:
 	# Only the authoritative peer controls this player.
-	if not is_multiplayer_authority():
+	if not _has_local_authority():
 		return
 
 	if _camera:
@@ -22,7 +22,19 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not is_multiplayer_authority():
+	if not _has_local_authority():
+		return
+
+	if _is_pause_menu_open():
+		# When the pause menu is open, ignore player look input (UI handles input first).
+		if event.is_action_pressed("ui_cancel") or _is_escape_pressed(event):
+			_close_pause_menu()
+			get_viewport().set_input_as_handled()
+		return
+
+	if event.is_action_pressed("ui_cancel") or _is_escape_pressed(event):
+		_open_pause_menu()
+		get_viewport().set_input_as_handled()
 		return
 
 	if event is InputEventMouseMotion:
@@ -33,12 +45,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		if _spring_arm:
 			_spring_arm.rotation.x = _pitch
 
-	if event.is_action_pressed("ui_cancel"):
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-
 
 func _physics_process(delta: float) -> void:
-	if not is_multiplayer_authority():
+	if not _has_local_authority():
+		return
+	if _is_pause_menu_open():
 		return
 
 	var dir := Vector3.ZERO
@@ -65,3 +76,40 @@ func _physics_process(delta: float) -> void:
 			velocity.y = jump_velocity
 
 	move_and_slide()
+
+
+func _is_pause_menu_open() -> bool:
+	var ui := GGF.get_manager(&"UIManager")
+	if ui and ui.has_method("is_menu_open"):
+		var val: Variant = ui.call("is_menu_open", "pause_menu")
+		return val is bool and (val as bool)
+	return false
+
+
+func _open_pause_menu() -> void:
+	var ui := GGF.get_manager(&"UIManager")
+	if ui and ui.has_method("open_menu"):
+		ui.call("open_menu", "pause_menu", true)
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+
+func _close_pause_menu() -> void:
+	var ui := GGF.get_manager(&"UIManager")
+	if ui and ui.has_method("close_menu"):
+		ui.call("close_menu", "pause_menu")
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+
+func _is_escape_pressed(event: InputEvent) -> bool:
+	if not (event is InputEventKey):
+		return false
+	var key_event := event as InputEventKey
+	return key_event.pressed and not key_event.echo and key_event.keycode == KEY_ESCAPE
+
+
+func _has_local_authority() -> bool:
+	# During disconnect/scene teardown, `multiplayer_peer` can be null for a frame.
+	# `is_multiplayer_authority()` may query a unique id, which errors without a peer.
+	if multiplayer.multiplayer_peer == null:
+		return false
+	return is_multiplayer_authority()

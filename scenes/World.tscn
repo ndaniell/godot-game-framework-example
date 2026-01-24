@@ -1,18 +1,21 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3 uid="uid://c8eucw11a5o56"]
 
-[ext_resource type="Script" path="res://src/world/World.gd" id="1"]
-
-[sub_resource type="BoxShape3D" id="1"]
-size = Vector3(50, 1, 50)
-
-[sub_resource type="BoxMesh" id="2"]
-size = Vector3(50, 1, 50)
+[ext_resource type="Script" uid="uid://cdd5i7b4e1iyx" path="res://src/world/World.gd" id="1"]
 
 [sub_resource type="Environment" id="3"]
 background_mode = 1
 background_color = Color(0.06, 0.07, 0.09, 1)
 ambient_light_color = Color(0.35, 0.37, 0.4, 1)
 ambient_light_energy = 0.6
+
+[sub_resource type="BoxShape3D" id="1"]
+size = Vector3(50, 1, 50)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kqs1s"]
+
+[sub_resource type="BoxMesh" id="2"]
+material = SubResource("StandardMaterial3D_kqs1s")
+size = Vector3(50, 1, 50)
 
 [node name="World" type="Node3D"]
 script = ExtResource("1")
@@ -21,7 +24,7 @@ script = ExtResource("1")
 environment = SubResource("3")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-rotation = Vector3(-0.6, -0.8, 0)
+transform = Transform3D(0.6967067, 0.4050497, -0.59205955, 0, 0.8253356, 0.5646425, 0.7173561, -0.3933902, 0.57501686, 0, 0, 0)
 
 [node name="Ground" type="StaticBody3D" parent="."]
 
@@ -30,4 +33,3 @@ shape = SubResource("1")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
 mesh = SubResource("2")
-
