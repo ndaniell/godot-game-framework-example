@@ -20,7 +20,7 @@ func _on_host_pressed() -> void:
 		return
 
 	if bool(net.host(_parse_port())):
-		GGF.get_manager(&"GameManager").change_state("LOBBY")
+		GGF.get_manager(&"GameManager").change_state("LOADING")
 
 
 func _on_join_pressed() -> void:
@@ -35,7 +35,7 @@ func _on_join_pressed() -> void:
 		return
 
 	if bool(net.join(ip, _parse_port())):
-		GGF.get_manager(&"GameManager").change_state("LOBBY")
+		GGF.get_manager(&"GameManager").change_state("LOADING")
 
 
 func _on_quit_pressed() -> void:

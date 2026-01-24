@@ -6,7 +6,13 @@
 [sub_resource type="Resource" id="SubResource_menu"]
 script = ExtResource("2_states")
 name = "MENU"
-entry_callback = "_on_menu_entered"
+properties = {
+"ui": {
+"close_all_dialogs": true,
+"open_menu": "main_menu",
+"open_menu_close_others": true
+}
+}
 
 [sub_resource type="Resource" id="SubResource_boot"]
 script = ExtResource("2_states")
@@ -15,16 +21,28 @@ name = "BOOT"
 [sub_resource type="Resource" id="SubResource_lobby"]
 script = ExtResource("2_states")
 name = "LOBBY"
-entry_callback = "_on_lobby_entered"
+properties = {
+"ui": {
+"close_all_dialogs": true,
+"open_menu": "lobby_menu",
+"open_menu_close_others": true
+}
+}
 
 [sub_resource type="Resource" id="SubResource_playing"]
 script = ExtResource("2_states")
 name = "PLAYING"
-entry_callback = "_on_playing_entered"
+properties = {
+"change_scene": "res://scenes/World.tscn",
+"ui": {
+"close_all_dialogs": true,
+"close_all_menus": true
+}
+}
 
 [resource]
 script = ExtResource("1_main")
-default_state = "BOOT"
+default_state = "MENU"
 states = {
 "BOOT": SubResource("SubResource_boot"),
 "LOBBY": SubResource("SubResource_lobby"),
