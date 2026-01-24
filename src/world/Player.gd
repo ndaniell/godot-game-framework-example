@@ -4,11 +4,11 @@ extends CharacterBody3D
 @export var jump_velocity: float = 6.5
 @export var mouse_sensitivity: float = 0.002
 
-@onready var _spring_arm: SpringArm3D = $SpringArm3D
-@onready var _camera: Camera3D = $SpringArm3D/Camera3D
-
 var _yaw: float = 0.0
 var _pitch: float = 0.0
+
+@onready var _spring_arm: SpringArm3D = $SpringArm3D
+@onready var _camera: Camera3D = $SpringArm3D/Camera3D
 
 
 func _ready() -> void:
