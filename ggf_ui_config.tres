@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" path="res://ui/LobbyMenu.tscn" id="7_lobby_menu"]
 [ext_resource type="PackedScene" path="res://ui/PauseMenu.tscn" id="8_pause_menu"]
 [ext_resource type="PackedScene" path="res://addons/godot_game_framework/resources/ui/SettingsDialog.tscn" id="9_settings_dialog"]
+[ext_resource type="PackedScene" path="res://ui/HUD.tscn" id="10_hud"]
 
 [resource]
 script = ExtResource("1_config")
@@ -39,6 +40,11 @@ pre_registered = [{
 "name": "settings_dialog",
 "scene": ExtResource("9_settings_dialog"),
 "layer": 5,
+"visible": false
+}, {
+"name": "hud",
+"scene": ExtResource("10_hud"),
+"layer": 2,
 "visible": false
 }]
 

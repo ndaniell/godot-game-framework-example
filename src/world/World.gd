@@ -65,3 +65,19 @@ func _spawn_player(peer_id: int) -> void:
 	player.set_multiplayer_authority(peer_id)
 
 	_players[peer_id] = player
+
+
+func get_closest_player(from_position: Vector3) -> Node3D:
+	var closest: Node3D = null
+	var closest_distance := INF
+
+	for player in _players.values():
+		if not is_instance_valid(player):
+			continue
+		var p := player as Node3D
+		var dist := from_position.distance_to(p.global_position)
+		if dist < closest_distance:
+			closest_distance = dist
+			closest = p
+
+	return closest

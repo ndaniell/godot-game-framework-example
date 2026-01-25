@@ -22,6 +22,7 @@ func _bootstrap() -> void:
 							"open_menu": "main_menu",
 							"open_menu_close_others": true,
 							"close_all_dialogs": true,
+							"hide_ui_element": "hud",
 						},
 					},
 					# Reuse the framework's LOADING state as a simple "lobby" state for this example.
@@ -32,6 +33,7 @@ func _bootstrap() -> void:
 							"open_menu": "lobby_menu",
 							"open_menu_close_others": true,
 							"close_all_dialogs": true,
+							"hide_ui_element": "hud",
 						},
 					},
 					"PLAYING":
@@ -41,6 +43,7 @@ func _bootstrap() -> void:
 						{
 							"close_all_menus": true,
 							"close_all_dialogs": true,
+							"show_ui_element": "hud",
 						},
 					},
 				}
