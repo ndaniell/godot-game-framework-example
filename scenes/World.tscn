@@ -1,11 +1,17 @@
-[gd_scene load_steps=7 format=3 uid="uid://c8eucw11a5o56"]
+[gd_scene load_steps=15 format=3 uid="uid://c8eucw11a5o56"]
 
 [ext_resource type="Script" uid="uid://cdd5i7b4e1iyx" path="res://src/world/World.gd" id="1"]
-[ext_resource type="Script" path="res://src/world/WaveSpawner.gd" id="2"]
+[ext_resource type="Script" uid="uid://g801dy436op2" path="res://src/world/WaveSpawner.gd" id="2"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_32lhk"]
+
+[sub_resource type="Sky" id="Sky_7g83o"]
+sky_material = SubResource("ProceduralSkyMaterial_32lhk")
 
 [sub_resource type="Environment" id="3"]
-background_mode = 1
+background_mode = 2
 background_color = Color(0.06, 0.07, 0.09, 1)
+sky = SubResource("Sky_7g83o")
 ambient_light_color = Color(0.35, 0.37, 0.4, 1)
 ambient_light_energy = 0.6
 
@@ -13,6 +19,7 @@ ambient_light_energy = 0.6
 size = Vector3(100, 1, 100)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kqs1s"]
+albedo_color = Color(0.13172188, 0.2888544, 0.16130713, 1)
 
 [sub_resource type="BoxMesh" id="2"]
 material = SubResource("StandardMaterial3D_kqs1s")
@@ -21,13 +28,21 @@ size = Vector3(100, 1, 100)
 [sub_resource type="BoxShape3D" id="BoxShape3D_wall"]
 size = Vector3(100, 5, 1)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_32lhk"]
+albedo_color = Color(0.14406255, 0.14406255, 0.14406255, 1)
+
 [sub_resource type="BoxMesh" id="BoxMesh_wall"]
+material = SubResource("StandardMaterial3D_32lhk")
 size = Vector3(100, 5, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_obstacle"]
 size = Vector3(3, 3, 3)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7g83o"]
+albedo_color = Color(0.33356822, 0.19378966, 0.004383556, 1)
+
 [sub_resource type="BoxMesh" id="BoxMesh_obstacle"]
+material = SubResource("StandardMaterial3D_7g83o")
 size = Vector3(3, 3, 3)
 
 [node name="World" type="Node3D"]

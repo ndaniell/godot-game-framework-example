@@ -1,12 +1,16 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3 uid="uid://ybnja4br1mym"]
 
-[ext_resource type="Script" path="res://src/world/Player.gd" id="1"]
+[ext_resource type="Script" uid="uid://tx1j85ls36ub" path="res://src/world/Player.gd" id="1"]
 
 [sub_resource type="CapsuleShape3D" id="1"]
 radius = 0.4
 height = 1.2
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p0vlq"]
+albedo_color = Color(0.182863, 0.83948153, 0.92579913, 1)
+
 [sub_resource type="CapsuleMesh" id="2"]
+material = SubResource("StandardMaterial3D_p0vlq")
 radius = 0.4
 height = 1.2
 
@@ -20,11 +24,8 @@ shape = SubResource("1")
 mesh = SubResource("2")
 
 [node name="SpringArm3D" type="SpringArm3D" parent="."]
-position = Vector3(0, 1.4, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
 spring_length = 5.0
-collision_mask = 1
 
 [node name="Camera3D" type="Camera3D" parent="SpringArm3D"]
 fov = 70.0
-near = 0.05
-
