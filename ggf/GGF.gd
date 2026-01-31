@@ -1,5 +1,13 @@
 extends "res://addons/godot_game_framework/GGF.gd"
 
+## Project bootstrapper for Godot Game Framework (GGF).
+##
+## This file matches the framework's recommended integration approach:
+## - Put your bootstrapper at `res://ggf/GGF.gd`
+## - Have the plugin register an autoload named `GGF` pointing at it
+##
+## You can safely customize it (override methods, add project-specific behavior, etc.).
+
 
 func _bootstrap() -> void:
 	# Delegate all manager creation to the framework.
@@ -49,3 +57,4 @@ func _bootstrap() -> void:
 				}
 			)
 		)
+

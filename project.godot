@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-GGF="*res://src/ExampleGGF.gd"
+GGF="*res://ggf/GGF.gd"
 
 [debug]
 

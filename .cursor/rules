@@ -7,7 +7,7 @@ You are working in a Godot 4.5+ example project that MUST use `godot-game-framew
     - `GGF.events()`, `GGF.notifications()`, `GGF.log()`
   - If no accessor exists (e.g. project-specific manager), use `GGF.get_manager(&"MyManager")` (avoid hardcoding `/root/...` paths).
 - Do NOT modify framework code in `addons/godot_game_framework/` unless the change is clearly reusable across projects.
-  - First try to extend/override via project code (e.g. `src/managers/*`, `src/ExampleGGF.gd`).
+  - First try to extend/override via project code (e.g. `src/managers/*`, `ggf/GGF.gd`).
 - Keep the example “framework-first”:
   - **Flow** is driven by `StateManager` states (example uses `MENU`, `LOADING` as lobby, `PLAYING`).
   - **UI** is registered and controlled via `UIManager` (access via `GGF.ui()`).

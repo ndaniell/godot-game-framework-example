@@ -50,5 +50,6 @@ Format / lint:
 ## Notes
 
 - The framework repo is the submodule at `third_party/godot-game-framework/`.
-- The Godot addon is symlinked into the project at `addons/godot_game_framework/` (so `plugin.cfg` is at the standard place).
-- The project autoload is `res://src/ExampleGGF.gd`, which extends the framework bootstrapper and injects `src/managers/ExampleGameManager.gd`.
+- The Godot addon is available at the standard location `addons/godot_game_framework/` (symlinked from the submodule).
+- The project bootstrapper is `res://ggf/GGF.gd` (recommended by the framework README).
+- The `GGF` autoload points at that bootstrapper (and the framework plugin will leave it alone if it already exists).

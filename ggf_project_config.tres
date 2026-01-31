@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="GGFProjectConfig" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://addons/godot_game_framework/core/types/GGFProjectConfig.gd" id="1_config"]
+[ext_resource type="Resource" path="res://addons/godot_game_framework/resources/data/ggf_settings_config_default.tres" id="2_settings"]
+[ext_resource type="Resource" path="res://ggf_ui_config.tres" id="3_ui"]
+[ext_resource type="Resource" path="res://resources/game_states.tres" id="4_states"]
+
+[resource]
+script = ExtResource("1_config")
+settings_config = ExtResource("2_settings")
+ui_config = ExtResource("3_ui")
+state_machine_config = ExtResource("4_states")
+enable_all_managers = true
+disabled_managers = []
+log_level = "INFO"
+save_directory = "user://saves"
+settings_file_path = "user://settings.save"
+log_directory = "user://logs"
+enable_diagnostics_overlay = true
+enable_file_logging = true
+enable_event_history = false
+
