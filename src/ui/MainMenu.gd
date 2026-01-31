@@ -26,9 +26,9 @@ func _on_join_pressed() -> void:
 
 
 func _on_quit_pressed() -> void:
-	var gm: GGF_GameManager = GGF.game()
-	if gm:
-		gm.quit_game()
+	var sm: GGF_StateManager = GGF.state()
+	if sm:
+		sm.quit_game()
 	else:
 		get_tree().quit()
 

@@ -2,13 +2,16 @@ You are working in a Godot 4.5+ example project that MUST use `godot-game-framew
 
 ## Non-negotiables
 - Prefer calling into **GGF managers** instead of creating new global singletons or bespoke manager nodes.
-  - Use `GGF.get_manager(&"GameManager")`, `GGF.get_manager(&"UIManager")`, `GGF.get_manager(&"NetworkManager")`, `GGF.events()`, `GGF.notifications()`, `GGF.log()`.
+  - Prefer the **GGF manager accessors** when they exist:
+    - `GGF.state()`, `GGF.ui()`, `GGF.network()`, `GGF.scene()`, `GGF.settings()`, `GGF.audio()`, `GGF.time()`, `GGF.input()`, `GGF.save()`, `GGF.pool()`, `GGF.resources()`
+    - `GGF.events()`, `GGF.notifications()`, `GGF.log()`
+  - If no accessor exists (e.g. project-specific manager), use `GGF.get_manager(&"MyManager")` (avoid hardcoding `/root/...` paths).
 - Do NOT modify framework code in `addons/godot_game_framework/` unless the change is clearly reusable across projects.
   - First try to extend/override via project code (e.g. `src/managers/*`, `src/ExampleGGF.gd`).
 - Keep the example “framework-first”:
-  - **Flow** is driven by `GameManager` states (`MENU`, `LOBBY`, `PLAYING`).
-  - **UI** is registered and controlled via `UIManager`.
-  - **Networking** uses `NetworkManager` and reacts through `EventManager`-mirrored events/signals.
+  - **Flow** is driven by `StateManager` states (example uses `MENU`, `LOADING` as lobby, `PLAYING`).
+  - **UI** is registered and controlled via `UIManager` (access via `GGF.ui()`).
+  - **Networking** uses `NetworkManager` (access via `GGF.network()`) and reacts through `EventManager` events/signals.
   - Use `NotificationManager` for player-visible feedback.
 
 ## When to expand the framework (suggestions you should surface)

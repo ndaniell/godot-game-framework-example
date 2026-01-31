@@ -17,9 +17,9 @@ func _on_host_pressed() -> void:
 		return
 
 	if net.host(_parse_port()):
-		var gm: GGF_GameManager = GGF.game()
-		if gm:
-			gm.change_state("PLAYING")
+		var sm: GGF_StateManager = GGF.state()
+		if sm:
+			sm.change_state("PLAYING")
 
 
 func _on_back_pressed() -> void:

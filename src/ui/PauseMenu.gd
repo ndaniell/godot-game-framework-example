@@ -2,7 +2,6 @@ extends Control
 
 @onready var _resume_button: Button = %ResumeButton
 @onready var _settings_button: Button = %SettingsButton
-@onready var _diagnostics_button: Button = %DiagnosticsButton
 @onready var _exit_to_menu_button: Button = %ExitToMenuButton
 @onready var _quit_button: Button = %QuitButton
 
@@ -12,7 +11,6 @@ func _ready() -> void:
 
 	_resume_button.pressed.connect(_on_resume_pressed)
 	_settings_button.pressed.connect(_on_settings_pressed)
-	_diagnostics_button.pressed.connect(_on_diagnostics_pressed)
 	_exit_to_menu_button.pressed.connect(_on_exit_to_menu_pressed)
 	_quit_button.pressed.connect(_on_quit_pressed)
 
@@ -25,6 +23,16 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	# Support both the InputMap action and a direct Escape fallback.
 	if event.is_action_pressed("ui_cancel") or _is_escape_pressed(event):
+		# Close the topmost dialog first (e.g. Settings), then the pause menu.
+		var ui: GGF_UIManager = GGF.ui()
+		if ui != null:
+			var open_dialogs := ui.get_open_dialogs()
+			if not open_dialogs.is_empty():
+				var topmost_dialog: String = open_dialogs[open_dialogs.size() - 1]
+				ui.close_dialog(topmost_dialog)
+				get_viewport().set_input_as_handled()
+				return
+
 		_close_pause_menu()
 		get_viewport().set_input_as_handled()
 
@@ -44,19 +52,6 @@ func _on_settings_pressed() -> void:
 		ui.open_dialog("settings_dialog", true)
 
 
-func _on_diagnostics_pressed() -> void:
-	var ui: GGF_UIManager = GGF.ui()
-	if ui == null:
-		return
-
-	var diagnostics_visible := ui.is_ui_element_visible("DiagnosticsOverlay")
-
-	if diagnostics_visible:
-		ui.hide_ui_element("DiagnosticsOverlay")
-	else:
-		ui.show_ui_element("DiagnosticsOverlay")
-
-
 func _on_exit_to_menu_pressed() -> void:
 	# Keep mouse visible for menu navigation.
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -67,15 +62,15 @@ func _on_exit_to_menu_pressed() -> void:
 	if net:
 		net.disconnect_from_game()
 
-	var gm: GGF_GameManager = GGF.game()
-	if gm:
-		gm.change_state("MENU")
+	var sm: GGF_StateManager = GGF.state()
+	if sm:
+		sm.change_state("MENU")
 
 
 func _on_quit_pressed() -> void:
-	var gm: GGF_GameManager = GGF.game()
-	if gm:
-		gm.quit_game()
+	var sm: GGF_StateManager = GGF.state()
+	if sm:
+		sm.quit_game()
 	else:
 		get_tree().quit()
 

@@ -6,10 +6,10 @@ func _bootstrap() -> void:
 	super._bootstrap()
 
 	# Example-specific behavior while reusing the framework's default state machine config.
-	var gm := get_manager(&"GameManager")
-	if gm != null:
+	var sm := get_manager(&"StateManager")
+	if sm != null:
 		(
-			gm
+			sm
 			. set(
 				"state_property_overrides",
 				{

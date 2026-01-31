@@ -81,7 +81,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	if _is_pause_menu_open():
 		# When the pause menu is open, ignore player look input (UI handles input first).
 		if event.is_action_pressed("ui_cancel") or _is_escape_pressed(event):
-			_close_pause_menu()
+			# Close the topmost dialog first (e.g. Settings), then the pause menu.
+			if not _close_topmost_dialog_if_any():
+				_close_pause_menu()
 			get_viewport().set_input_as_handled()
 		return
 
@@ -91,6 +93,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 
 	if event is InputEventMouseMotion:
+		# Only apply mouse-look when the cursor is captured.
+		if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
+			return
 		_yaw -= event.relative.x * mouse_sensitivity
 		_pitch -= event.relative.y * mouse_sensitivity
 		_pitch = clamp(_pitch, -1.2, 1.2)
@@ -168,6 +173,20 @@ func _close_pause_menu() -> void:
 	if ui:
 		ui.close_menu("pause_menu")
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+
+func _close_topmost_dialog_if_any() -> bool:
+	var ui: GGF_UIManager = GGF.ui()
+	if ui == null:
+		return false
+
+	var open_dialogs := ui.get_open_dialogs()
+	if open_dialogs.is_empty():
+		return false
+
+	var topmost_dialog: String = open_dialogs[open_dialogs.size() - 1]
+	ui.close_dialog(topmost_dialog)
+	return true
 
 
 func _is_escape_pressed(event: InputEvent) -> bool:

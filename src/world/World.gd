@@ -40,8 +40,8 @@ func _on_peer_joined(data: Dictionary) -> void:
 
 	# If host is already playing, automatically start the game for the late joiner
 	var net: GGF_NetworkManager = GGF.network()
-	var gm: GGF_GameManager = GGF.game()
-	if net and gm and net.is_host() and gm.is_in_state("PLAYING"):
+	var sm: GGF_StateManager = GGF.state()
+	if net and sm and net.is_host() and sm.is_in_state("PLAYING"):
 		net.send_session_event_to_peer(peer_id, &"start_game", {})
 
 

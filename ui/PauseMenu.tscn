@@ -78,11 +78,6 @@ unique_name_in_owner = true
 text = "Settings"
 custom_minimum_size = Vector2(0, 44)
 
-[node name="DiagnosticsButton" type="Button" parent="Root/Panel/Margin/VBox"]
-unique_name_in_owner = true
-text = "Diagnostics"
-custom_minimum_size = Vector2(0, 44)
-
 [node name="ExitToMenuButton" type="Button" parent="Root/Panel/Margin/VBox"]
 unique_name_in_owner = true
 text = "Exit to Main Menu"

@@ -56,18 +56,18 @@ func _on_start_pressed() -> void:
 
 	# Server broadcasts; NetworkManager accepts it locally and RPCs to clients.
 	net.broadcast_session_event(&"start_game", {})
-	var gm: GGF_GameManager = GGF.game()
-	if gm:
-		gm.change_state("PLAYING")
+	var sm: GGF_StateManager = GGF.state()
+	if sm:
+		sm.change_state("PLAYING")
 
 
 func _on_back_pressed() -> void:
 	var net: GGF_NetworkManager = GGF.network()
 	if net:
 		net.disconnect_from_game()
-	var gm: GGF_GameManager = GGF.game()
-	if gm:
-		gm.change_state("MENU")
+	var sm: GGF_StateManager = GGF.state()
+	if sm:
+		sm.change_state("MENU")
 
 
 func _on_network_connected(_data: Dictionary) -> void:
@@ -84,6 +84,6 @@ func _on_peer_changed(_data: Dictionary) -> void:
 
 func _on_start_game_event(_data: Dictionary) -> void:
 	# Client receives this via EventManager mirroring the session event.
-	var gm: GGF_GameManager = GGF.game()
-	if gm:
-		gm.change_state("PLAYING")
+	var sm: GGF_StateManager = GGF.state()
+	if sm:
+		sm.change_state("PLAYING")

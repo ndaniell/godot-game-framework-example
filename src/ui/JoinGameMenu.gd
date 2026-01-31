@@ -23,9 +23,9 @@ func _on_join_pressed() -> void:
 		return
 
 	if net.join(ip, _parse_port()):
-		var gm: GGF_GameManager = GGF.game()
-		if gm:
-			gm.change_state("LOADING")
+		var sm: GGF_StateManager = GGF.state()
+		if sm:
+			sm.change_state("LOADING")
 
 
 func _on_back_pressed() -> void:

@@ -21,3 +21,4 @@ voice_volume = 1.0
 mute_when_unfocused = false
 difficulty = "normal"
 language = "en"
+diagnostics_overlay_enabled = false

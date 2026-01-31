@@ -1,3 +1,6 @@
 {
-    "godotTools.editorPath.godot4": "/home/ndaniell/git/godot-game-framework-example/godot/Godot_v4.5.1-stable_linux.x86_64"
+    "godotTools.editorPath.godot4": "/home/ndaniell/git/godot-game-framework-example/godot/Godot_v4.5.1-stable_linux.x86_64",
+    "files.exclude": {
+        "**/third_party/godot-game-framework/**": true
+    }
 }
