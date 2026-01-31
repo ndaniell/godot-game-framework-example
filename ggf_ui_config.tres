@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="GGF_UIConfig" load_steps=10 format=3]
+[gd_resource type="Resource" script_class="GGF_UIConfig" load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://addons/godot_game_framework/core/types/UIConfig.gd" id="1_config"]
 [ext_resource type="PackedScene" path="res://addons/godot_game_framework/resources/ui/UIRoot.tscn" id="2_ui_root"]
@@ -6,10 +6,12 @@
 [ext_resource type="PackedScene" path="res://addons/godot_game_framework/resources/ui/NotificationContainer.tscn" id="4_container"]
 [ext_resource type="PackedScene" path="res://addons/godot_game_framework/resources/ui/DiagnosticsOverlay.tscn" id="5_diagnostics"]
 [ext_resource type="PackedScene" path="res://ui/MainMenu.tscn" id="6_main_menu"]
-[ext_resource type="PackedScene" path="res://ui/LobbyMenu.tscn" id="7_lobby_menu"]
-[ext_resource type="PackedScene" path="res://ui/PauseMenu.tscn" id="8_pause_menu"]
-[ext_resource type="PackedScene" path="res://addons/godot_game_framework/resources/ui/SettingsDialog.tscn" id="9_settings_dialog"]
-[ext_resource type="PackedScene" path="res://ui/HUD.tscn" id="10_hud"]
+[ext_resource type="PackedScene" path="res://ui/HostGameMenu.tscn" id="7_host_game_menu"]
+[ext_resource type="PackedScene" path="res://ui/JoinGameMenu.tscn" id="8_join_game_menu"]
+[ext_resource type="PackedScene" path="res://ui/LobbyMenu.tscn" id="9_lobby_menu"]
+[ext_resource type="PackedScene" path="res://ui/PauseMenu.tscn" id="10_pause_menu"]
+[ext_resource type="PackedScene" path="res://addons/godot_game_framework/resources/ui/SettingsDialog.tscn" id="11_settings_dialog"]
+[ext_resource type="PackedScene" path="res://ui/HUD.tscn" id="12_hud"]
 
 [resource]
 script = ExtResource("1_config")
@@ -27,23 +29,33 @@ pre_registered = [{
 "layer": 3,
 "visible": false
 }, {
+"name": "host_game_menu",
+"scene": ExtResource("7_host_game_menu"),
+"layer": 3,
+"visible": false
+}, {
+"name": "join_game_menu",
+"scene": ExtResource("8_join_game_menu"),
+"layer": 3,
+"visible": false
+}, {
 "name": "lobby_menu",
-"scene": ExtResource("7_lobby_menu"),
+"scene": ExtResource("9_lobby_menu"),
 "layer": 3,
 "visible": false
 }, {
 "name": "pause_menu",
-"scene": ExtResource("8_pause_menu"),
+"scene": ExtResource("10_pause_menu"),
 "layer": 3,
 "visible": false
 }, {
 "name": "settings_dialog",
-"scene": ExtResource("9_settings_dialog"),
+"scene": ExtResource("11_settings_dialog"),
 "layer": 5,
 "visible": false
 }, {
 "name": "hud",
-"scene": ExtResource("10_hud"),
+"scene": ExtResource("12_hud"),
 "layer": 2,
 "visible": false
 }]

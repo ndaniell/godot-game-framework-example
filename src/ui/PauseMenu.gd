@@ -39,27 +39,22 @@ func _on_resume_pressed() -> void:
 
 
 func _on_settings_pressed() -> void:
-	var ui := GGF.get_manager(&"UIManager")
-	if ui and ui.has_method("open_dialog"):
-		ui.call("open_dialog", "settings_dialog", true)
+	var ui: GGF_UIManager = GGF.ui()
+	if ui:
+		ui.open_dialog("settings_dialog", true)
 
 
 func _on_diagnostics_pressed() -> void:
-	var ui := GGF.get_manager(&"UIManager")
+	var ui: GGF_UIManager = GGF.ui()
 	if ui == null:
 		return
 
-	var diagnostics_visible := false
-	if ui.has_method("is_ui_element_visible"):
-		var val: Variant = ui.call("is_ui_element_visible", "DiagnosticsOverlay")
-		diagnostics_visible = val is bool and (val as bool)
+	var diagnostics_visible := ui.is_ui_element_visible("DiagnosticsOverlay")
 
 	if diagnostics_visible:
-		if ui.has_method("hide_ui_element"):
-			ui.call("hide_ui_element", "DiagnosticsOverlay")
+		ui.hide_ui_element("DiagnosticsOverlay")
 	else:
-		if ui.has_method("show_ui_element"):
-			ui.call("show_ui_element", "DiagnosticsOverlay")
+		ui.show_ui_element("DiagnosticsOverlay")
 
 
 func _on_exit_to_menu_pressed() -> void:
@@ -68,27 +63,27 @@ func _on_exit_to_menu_pressed() -> void:
 
 	_close_pause_menu(false)
 
-	var net := GGF.get_manager(&"NetworkManager")
-	if net and net.has_method("disconnect_from_game"):
+	var net: GGF_NetworkManager = GGF.network()
+	if net:
 		net.disconnect_from_game()
 
-	var gm := GGF.get_manager(&"GameManager")
+	var gm: GGF_GameManager = GGF.game()
 	if gm:
 		gm.change_state("MENU")
 
 
 func _on_quit_pressed() -> void:
-	var gm := GGF.get_manager(&"GameManager")
-	if gm and gm.has_method("quit_game"):
+	var gm: GGF_GameManager = GGF.game()
+	if gm:
 		gm.quit_game()
 	else:
 		get_tree().quit()
 
 
 func _close_pause_menu(recapture_mouse: bool = true) -> void:
-	var ui := GGF.get_manager(&"UIManager")
-	if ui and ui.has_method("close_menu"):
-		ui.call("close_menu", "pause_menu")
+	var ui: GGF_UIManager = GGF.ui()
+	if ui:
+		ui.close_menu("pause_menu")
 
 	if recapture_mouse:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED

@@ -35,15 +35,68 @@ show_help() {
     echo "    ${YELLOW}--diff${NC}            For format --check: print unified diff"
 }
 
+# Try to activate a local virtual environment if commands are not found
+try_activate_venv() {
+    # Check if we've already tried to activate (to avoid infinite loops)
+    if [ -n "${GGFE_VENV_ACTIVATED:-}" ]; then
+        return 1
+    fi
+    
+    # Look for .venv or venv directories in current dir and up to 3 parent levels
+    local search_dir="$PWD"
+    local max_depth=3
+    local depth=0
+    
+    while [ $depth -le $max_depth ]; do
+        for venv_dir in ".venv" "venv"; do
+            local venv_path="$search_dir/$venv_dir"
+            if [ -f "$venv_path/bin/activate" ]; then
+                echo "${BLUE}Activating virtual environment: $venv_path${NC}" >&2
+                # Source the activation script
+                # shellcheck disable=SC1091
+                . "$venv_path/bin/activate"
+                export GGFE_VENV_ACTIVATED=1
+                return 0
+            fi
+        done
+        
+        # Move up one directory
+        local parent_dir
+        parent_dir="$(dirname "$search_dir")"
+        
+        # Stop if we've reached the root or can't go further up
+        if [ "$parent_dir" = "$search_dir" ] || [ "$parent_dir" = "/" ]; then
+            break
+        fi
+        
+        search_dir="$parent_dir"
+        depth=$((depth + 1))
+    done
+    
+    return 1
+}
+
 require_command() {
     local cmd="$1"
     local human_name="$2"
+    
     if command -v "$cmd" > /dev/null 2>&1; then
         return 0
     fi
     if [ -x ".venv/bin/$cmd" ]; then
         return 0
     fi
+    
+    # Try to activate venv if not already done
+    if [ -z "${GGFE_VENV_ACTIVATED:-}" ]; then
+        if try_activate_venv; then
+            # Check again after activation
+            if command -v "$cmd" > /dev/null 2>&1; then
+                return 0
+            fi
+        fi
+    fi
+    
     echo "${RED}Error: '$cmd' not found.${NC}"
     echo "${YELLOW}Install ${human_name} locally to use this command.${NC}"
     echo "${YELLOW}Tip: pip install -r requirements-dev.txt${NC}"
@@ -52,14 +105,26 @@ require_command() {
 
 resolve_command() {
     local cmd="$1"
+    
     if command -v "$cmd" > /dev/null 2>&1; then
-        echo "$cmd"
+        command -v "$cmd"
         return 0
     fi
     if [ -x ".venv/bin/$cmd" ]; then
         echo ".venv/bin/$cmd"
         return 0
     fi
+    
+    # If command still not found and venv not activated, try activating
+    if [ -z "${GGFE_VENV_ACTIVATED:-}" ]; then
+        if try_activate_venv; then
+            if command -v "$cmd" > /dev/null 2>&1; then
+                command -v "$cmd"
+                return 0
+            fi
+        fi
+    fi
+    
     return 1
 }
 
@@ -119,7 +184,10 @@ cmd_lint() {
     local GDLINT
     GDLINT="$(resolve_command gdlint)"
 
+    echo "${BLUE}Linting example project code...${NC}"
     "$GDLINT" src ui scenes resources
+    
+    echo "${BLUE}Linting framework addon code...${NC}"
     "$GDLINT" addons/godot_game_framework
 }
 

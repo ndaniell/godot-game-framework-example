@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3]
 
-[ext_resource type="Script" path="res://src/ui/MainMenu.gd" id="1"]
+[ext_resource type="Script" path="res://src/ui/JoinGameMenu.gd" id="1"]
 
 [sub_resource type="StyleBoxFlat" id="1"]
 bg_color = Color(0.09, 0.10, 0.12, 0.92)
@@ -20,7 +20,7 @@ content_margin_right = 24
 content_margin_top = 22
 content_margin_bottom = 22
 
-[node name="MainMenu" type="Control"]
+[node name="JoinGameMenu" type="Control"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -38,7 +38,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="Panel" type="PanelContainer" parent="Root"]
-custom_minimum_size = Vector2(560, 460)
+custom_minimum_size = Vector2(560, 420)
 theme_override_styles/panel = SubResource("1")
 
 [node name="Margin" type="MarginContainer" parent="Root/Panel"]
@@ -53,40 +53,49 @@ alignment = 1
 theme_override_constants/separation = 12
 
 [node name="Title" type="Label" parent="Root/Panel/Margin/VBox"]
-text = "GGF Example"
+text = "Join Game"
 horizontal_alignment = 1
 theme_override_font_sizes/font_size = 28
 
 [node name="Subtitle" type="Label" parent="Root/Panel/Margin/VBox"]
-text = "Choose an option to begin."
+text = "Enter the host's connection details."
 horizontal_alignment = 1
 autowrap_mode = 2
 theme_override_font_sizes/font_size = 14
 modulate = Color(1, 1, 1, 0.8)
 
 [node name="Spacer1" type="Control" parent="Root/Panel/Margin/VBox"]
-custom_minimum_size = Vector2(0, 4)
+custom_minimum_size = Vector2(0, 8)
 
-[node name="HostButton" type="Button" parent="Root/Panel/Margin/VBox"]
+[node name="IpLabel" type="Label" parent="Root/Panel/Margin/VBox"]
+text = "Server IP"
+theme_override_font_sizes/font_size = 14
+
+[node name="IpEdit" type="LineEdit" parent="Root/Panel/Margin/VBox"]
 unique_name_in_owner = true
-text = "Host Game"
-custom_minimum_size = Vector2(0, 44)
+text = "127.0.0.1"
+placeholder_text = "Server IP"
+custom_minimum_size = Vector2(0, 40)
+
+[node name="PortLabel" type="Label" parent="Root/Panel/Margin/VBox"]
+text = "Port"
+theme_override_font_sizes/font_size = 14
+
+[node name="PortEdit" type="LineEdit" parent="Root/Panel/Margin/VBox"]
+unique_name_in_owner = true
+text = "8910"
+placeholder_text = "Port"
+custom_minimum_size = Vector2(0, 40)
+
+[node name="Spacer2" type="Control" parent="Root/Panel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 8)
 
 [node name="JoinButton" type="Button" parent="Root/Panel/Margin/VBox"]
 unique_name_in_owner = true
-text = "Join Game"
+text = "Join"
 custom_minimum_size = Vector2(0, 44)
 
-[node name="SettingsButton" type="Button" parent="Root/Panel/Margin/VBox"]
+[node name="BackButton" type="Button" parent="Root/Panel/Margin/VBox"]
 unique_name_in_owner = true
-text = "Settings"
+text = "Back"
 custom_minimum_size = Vector2(0, 44)
-
-[node name="Spacer2" type="Control" parent="Root/Panel/Margin/VBox"]
-custom_minimum_size = Vector2(0, 4)
-
-[node name="QuitButton" type="Button" parent="Root/Panel/Margin/VBox"]
-unique_name_in_owner = true
-text = "Quit"
-custom_minimum_size = Vector2(0, 44)
-

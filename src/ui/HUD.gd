@@ -11,19 +11,11 @@ extends Control
 func _ready() -> void:
 	var ev := GGF.events()
 	if ev:
-		ev.subscribe("player_stats_changed", _on_player_stats_changed)
-		ev.subscribe("player_weapon_changed", _on_player_weapon_changed)
-		ev.subscribe("player_ammo_changed", _on_player_ammo_changed)
-		ev.subscribe("wave_changed", _on_wave_changed)
-
-
-func _exit_tree() -> void:
-	var ev := GGF.events()
-	if ev:
-		ev.unsubscribe("player_stats_changed", _on_player_stats_changed)
-		ev.unsubscribe("player_weapon_changed", _on_player_weapon_changed)
-		ev.unsubscribe("player_ammo_changed", _on_player_ammo_changed)
-		ev.unsubscribe("wave_changed", _on_wave_changed)
+		# Use subscribe_owned for automatic cleanup when this node exits the tree
+		ev.subscribe_owned("player_stats_changed", self, "_on_player_stats_changed")
+		ev.subscribe_owned("player_weapon_changed", self, "_on_player_weapon_changed")
+		ev.subscribe_owned("player_ammo_changed", self, "_on_player_ammo_changed")
+		ev.subscribe_owned("wave_changed", self, "_on_wave_changed")
 
 
 func _on_player_stats_changed(data: Dictionary) -> void:

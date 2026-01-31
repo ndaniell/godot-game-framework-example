@@ -18,21 +18,16 @@ func _get_peer_ids() -> Array[int]:
 
 func _ready() -> void:
 	# React to connection lifecycle through the framework’s managers/events.
-	GGF.events().subscribe("peer_joined", _on_peer_joined)
-	GGF.events().subscribe("peer_left", _on_peer_left)
+	var ev := GGF.events()
+	if ev:
+		ev.subscribe_owned("peer_joined", self, "_on_peer_joined")
+		ev.subscribe_owned("peer_left", self, "_on_peer_left")
 
 	_spawn_existing_peers()
 
 
-func _exit_tree() -> void:
-	var ev := GGF.events()
-	if ev:
-		ev.unsubscribe("peer_joined", _on_peer_joined)
-		ev.unsubscribe("peer_left", _on_peer_left)
-
-
 func _spawn_existing_peers() -> void:
-	var net := GGF.get_manager(&"NetworkManager")
+	var net: GGF_NetworkManager = GGF.network()
 	if net == null:
 		return
 	for peer_id in _get_peer_ids():
@@ -40,7 +35,14 @@ func _spawn_existing_peers() -> void:
 
 
 func _on_peer_joined(data: Dictionary) -> void:
-	_spawn_player(int(data.get("peer_id", 0)))
+	var peer_id := int(data.get("peer_id", 0))
+	_spawn_player(peer_id)
+
+	# If host is already playing, automatically start the game for the late joiner
+	var net: GGF_NetworkManager = GGF.network()
+	var gm: GGF_GameManager = GGF.game()
+	if net and gm and net.is_host() and gm.is_in_state("PLAYING"):
+		net.send_session_event_to_peer(peer_id, &"start_game", {})
 
 
 func _on_peer_left(data: Dictionary) -> void:

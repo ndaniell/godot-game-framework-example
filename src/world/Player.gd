@@ -150,24 +150,23 @@ func _physics_process(delta: float) -> void:
 
 
 func _is_pause_menu_open() -> bool:
-	var ui := GGF.get_manager(&"UIManager")
-	if ui and ui.has_method("is_menu_open"):
-		var val: Variant = ui.call("is_menu_open", "pause_menu")
-		return val is bool and (val as bool)
+	var ui: GGF_UIManager = GGF.ui()
+	if ui:
+		return ui.is_menu_open("pause_menu")
 	return false
 
 
 func _open_pause_menu() -> void:
-	var ui := GGF.get_manager(&"UIManager")
-	if ui and ui.has_method("open_menu"):
-		ui.call("open_menu", "pause_menu", true)
+	var ui: GGF_UIManager = GGF.ui()
+	if ui:
+		ui.open_menu("pause_menu", true)
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 
 func _close_pause_menu() -> void:
-	var ui := GGF.get_manager(&"UIManager")
-	if ui and ui.has_method("close_menu"):
-		ui.call("close_menu", "pause_menu")
+	var ui: GGF_UIManager = GGF.ui()
+	if ui:
+		ui.close_menu("pause_menu")
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
